@@ -1,0 +1,3 @@
+rootProject.name = 'yet_another_kunwu'
+include 'core'
+
