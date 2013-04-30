@@ -22,12 +22,28 @@ public class ParameterReference <T> {
         this.service = service;
     }
 
-    public T dereference(DeanContainer container) {
+    public T dereference(ServiceContainer container) {
         if (refType == ReferenceType.SERVICE) {
             return container.getService(service, serviceKey);
         } else {
             return value;
         }
+    }
+
+    public T getValue() {
+        return value;
+    }
+
+    public Enum getServiceKey() {
+        return serviceKey;
+    }
+
+    public Class<T> getService() {
+        return service;
+    }
+
+    public ReferenceType getRefType() {
+        return refType;
     }
 
     public static <T> ParameterReference<T> refByService(Class<T> service) {

@@ -4,11 +4,11 @@ import com.thoughtworks.yak.injectors.ConstructorInjector;
 
 import java.util.*;
 
-public class CoreDeanContainer implements DeanContainer {
+public class CoreServiceContainer implements ServiceContainer {
     private final Set<ServiceModule> serviceModules = new HashSet<ServiceModule>();
     private final Map<ServiceDefinition<?>, ServiceFactory<?>> serviceFactoryMap = new HashMap<ServiceDefinition<?>, ServiceFactory<?>>();
 
-    public CoreDeanContainer(ServiceModule... modules) {
+    public CoreServiceContainer(ServiceModule... modules) {
         serviceModules.addAll(Arrays.asList(modules));
         for (ServiceModule module : modules) {
             module.initialize();
