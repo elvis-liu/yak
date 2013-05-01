@@ -13,9 +13,9 @@ import static org.junit.Assert.assertThat;
 
 public class CoreServiceContainerTest {
 
-    private enum RESOURCE_KEYS {
-        TEST_RESOURCE;
-    };
+    private enum SERVICE_KEYS {
+        TEST_SERVICE_A
+    }
 
     @Test
     public void shouldBuildContainerWithService() throws Exception {
@@ -66,11 +66,26 @@ public class CoreServiceContainerTest {
         assertThat(service.getTestSet(), nullValue());
     }
 
+    @Test
+    public void shouldGetServiceWithKey() throws Exception {
+        ServiceModule serviceModule = new ServiceModule() {
+            @Override
+            protected void configure() {
+                addService(TestService.class).withKey(SERVICE_KEYS.TEST_SERVICE_A).implementedBy(TestServiceProvider.class);
+            }
+        };
+        ServiceContainer serviceContainer = new CoreServiceContainer(serviceModule);
+
+        assertThat(serviceContainer.getService(TestService.class), nullValue());
+        assertThat(serviceContainer.getService(TestService.class, SERVICE_KEYS.TEST_SERVICE_A), notNullValue());
+    }
+
     public interface TestService {
         List getTestList();
         Set getTestSet();
     }
 
+    @SuppressWarnings("unused")
     public static class TestServiceProvider implements TestService {
         private final List testList;
         private final Set testSet;

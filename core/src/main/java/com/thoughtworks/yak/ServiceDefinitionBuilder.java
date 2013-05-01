@@ -5,6 +5,7 @@ import java.lang.reflect.Modifier;
 public class ServiceDefinitionBuilder <T> {
     private Class<T> service;
     private Class<? extends T> serviceProvider;
+    private Enum key;
 
     ServiceDefinitionBuilder(Class<T> service) {
         if (!isAllowedServiceType(service)) {
@@ -34,6 +35,7 @@ public class ServiceDefinitionBuilder <T> {
             return false;
         }
 
+        //noinspection RedundantIfStatement
         if (serviceProvider.getConstructors().length == 0) {
             return false;
         }
@@ -56,6 +58,11 @@ public class ServiceDefinitionBuilder <T> {
     }
 
     public ServiceDefinition<T> build() {
-        return new ServiceDefinition<T>(service, serviceProvider);
+        return new ServiceDefinition<T>(service, serviceProvider, key);
+    }
+
+    public ServiceDefinitionBuilder<T> withKey(Enum key) {
+        this.key = key;
+        return this;
     }
 }

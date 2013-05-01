@@ -9,7 +9,8 @@ public abstract class ServiceModule {
 
     public <T> ServiceDefinition<T> getService(Class<T> serviceType, Enum key) {
         for (ServiceDefinition<?> definition : serviceDefinitions) {
-            if (definition.getService().equals(serviceType)) {
+            if (definition.getService().equals(serviceType) && definition.getKey().equals(key)) {
+                //noinspection unchecked
                 return (ServiceDefinition<T>) definition;
             }
         }
